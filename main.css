@@ -1,0 +1,55 @@
+:root{
+    --verde: rgb(156, 193, 77);
+    --verde-medio: rgb(141, 181, 57);
+    --verde-escuro:  rgb(32, 37, 20);
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 40rem;
+    margin: auto;
+    border: 4px solid black;
+    background-color: var(--verde);
+}
+
+.titulo{
+    text-align: center;
+    font-size: 3rem;
+}
+
+.info{
+    border-top: 4px  solid black;
+    border-bottom: 4px  solid black;
+    height: 3rem;
+    color: black;
+    padding: 0.4rem;
+}
+
+.cobra-score{
+    text-align: right;
+    display: inline-block;
+}
+
+.score{
+    display: inline-block;
+}
+
+.campo{
+    background-color: var(--verde);
+    outline: 2px solid var(--verde-medio);
+    width: 2rem;
+    height: 2rem;
+}
+
+.campo-cobra{
+    background-color: var(--verde-escuro);
+}
+
+.campo-fruta{
+    background-color: rgb(209, 49, 49);
+}
