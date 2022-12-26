@@ -47,9 +47,11 @@
 }
 
 .campo-cobra{
+    z-index: 1;
     background-color: var(--verde-escuro);
 }
 
 .campo-fruta{
+   
     background-color: rgb(209, 49, 49);
 }

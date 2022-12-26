@@ -1,8 +1,8 @@
 const campos = document.getElementsByClassName("campo");
 const inicio = campos.length/2;
 const cobra = [];
-let timer; 
-let dir = 'cima';
+let dir = 'dir';
+let comeu = false;
 
 const corpo = {
     p_atual: 0,
@@ -23,6 +23,8 @@ function criaCorpo(atual , prox){
 
 criaCorpo(inicio, inicio+1);
 criaCorpo(inicio-1, inicio);
+
+geraFruta(2);
 
 
 document.addEventListener('keyup', (event)=>{
@@ -96,6 +98,11 @@ function moveCabeca(){
         proximo = atual + 20;
     }
 
+    if(campos[atual].classList.contains('campo-fruta')){
+        comeu = true;
+    }
+
+
     //Modifica os valores da posição da cabeça
     campos[cobra[0].p_atual].classList.remove("campo-cobra"); 
     cobra[0].p_atual = atual;
@@ -119,12 +126,50 @@ function moveCobra(){
     for(i = 1; i<cobra.length; i++){
         moveCorpo(cobra[i-1].p_atual);
     }
+}
+
+
+//Essa função gera as frutas em locais aleatórios do tabuleiro.
+function geraFruta(index){
+
+    //Gera aleatoriamente a proxima posição da maçã
+    posicao = Math.floor(Math.random() * campos.length);
+
+    //Garante que a posição da maça não seja igual a da anterior
+    //Garante que a maça não apareça em cima da cobra
+    while(posicao == index && !campos[posicao].classList.contains("campo-cobra")){
+        posicao = Math.floor(Math.random() * campos.length);
+    }
+
+    campos[posicao].classList.add("campo-fruta");
+   
+    console.log(posicao);
+}
+
+//Remove o campo maça
+function removeFruta(index){
+    campos[posicao].classList.remove("campo-fruta");
+}
+
+
+//Essa função chama todas as outras necessárias para o funcionamento do jogo.
+function rodaJogo(){
+    //movimenta a cobra:
+    moveCobra();
+
+    //Verifica se o campo é uma maça
+    if(comeu){
+        console.log("nhac");
+        removeFruta(cobra[0].p_atual);
+        geraFruta(cobra[0].p_atual);
+        comeu = false;
+    } 
     
 }
 
 //Mantém a cobra andando
 function iniciaContagem(){
-    timer = setInterval((moveCobra), 500);
+    timer = setInterval((rodaJogo), 500);
 }
 
 iniciaContagem();
