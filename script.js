@@ -78,7 +78,7 @@ function moveCabeca(){
 
         atual = cobra[0].p_atual - 20;
 
-        console.log("atual:"+atual)
+        // console.log("atual:"+atual)
 
         //verifica o limite de cima
         if(atual < 0){
@@ -111,11 +111,13 @@ function moveCabeca(){
 }
 
 //Movimenta o corpo da cobra
-function moveCorpo(proximo){
-    campos[cobra[1].p_atual].classList.remove("campo-cobra");
-    campos[cobra[1].p_prox].classList.add("campo-cobra");
-    cobra[1].p_atual = cobra[1].p_prox;
-    cobra[1].p_prox = proximo;
+function moveCorpo(proximo, i){
+
+        campos[cobra[i].p_atual].classList.remove("campo-cobra");
+        campos[cobra[i].p_prox].classList.add("campo-cobra");
+        cobra[i].p_atual = cobra[i].p_prox;
+        cobra[i].p_prox = proximo;
+
 }
 
 //Movimenta a cobra inteira :v
@@ -124,7 +126,7 @@ function moveCobra(){
     moveCabeca();
 
     for(i = 1; i<cobra.length; i++){
-        moveCorpo(cobra[i-1].p_atual);
+        moveCorpo(cobra[i-1].p_atual, i);
     }
 }
 
@@ -152,6 +154,21 @@ function removeFruta(index){
 }
 
 
+//Gera todos os acontecimentos relacionados a comer a maça
+//Criar uma nova
+//apagar a antiga
+//criar uma nova parte de corpo.
+function criaInteracaoFruta(){
+    removeFruta(cobra[0].p_atual);
+    geraFruta(cobra[0].p_atual);
+
+    let prox = cobra[cobra.length-1].p_atual;
+    let atual = prox - 1;
+    criaCorpo(atual, prox);
+}
+
+
+
 //Essa função chama todas as outras necessárias para o funcionamento do jogo.
 function rodaJogo(){
     //movimenta a cobra:
@@ -159,17 +176,16 @@ function rodaJogo(){
 
     //Verifica se o campo é uma maça
     if(comeu){
-        console.log("nhac");
-        removeFruta(cobra[0].p_atual);
-        geraFruta(cobra[0].p_atual);
+        criaInteracaoFruta();
         comeu = false;
     } 
+
     
 }
 
 //Mantém a cobra andando
 function iniciaContagem(){
-    timer = setInterval((rodaJogo), 500);
+    timer = setInterval((rodaJogo), 200);
 }
 
 iniciaContagem();
